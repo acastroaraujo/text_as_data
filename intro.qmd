@@ -1,0 +1,87 @@
+# Introduction
+
+```{r}
+library(stringr)
+```
+
+## Regular Expressions
+
+Regular expressions are a language for specifying search within strings of text.
+
+-   "`.`": matches *any* character.
+
+-   "`\`" (or escape): escapes the special behaviour of expressions like "`.`". For example, "`\.`" will match "." instead of any character.
+
+-   **Anchors** are used to match the start or end of a string.
+
+    -   "`^`": matches the start of the string.
+
+    -   "`$`": matches the end of the string.
+
+-   "`\d`": matches any digit.
+
+-   "`\s`": matches any white space (e.g. space, tab, newline)
+
+-   "`[abc]`": matches a, b, or c. For example, "`[Cc]olor`" matches either "color" or "Color".
+
+    In cases where there's a well-defined sequence associated with a set of characters, these brackets can be mixed the "`-`" (dash) symbol to specify a *range* of characters; for example, "`[abcdefghijk]`" is equivalent to "`[a-k]`".
+
+-   "`[^abc]`": matches anything *except* a, b, or c.
+
+-   "`|`" (or disjunction operator): pick between one or more alternate patterns. To make the disjunction operator apply only to a specific pattern, we need to use the parenthesis operators "`()`". For example, "`pupp(y|ies)`" matches either "puppy" or "puppies" (the disjunction only applies to the suffixes).
+
+-   **Repetition**:
+
+    -   "`*`" (or Kleene star): matches zero or more instances of the previous pattern.
+
+    -   "`+`": matches one or more instance.
+
+    -   "`?`": matches zero or one instance.
+
+        A range of numbers can also be specified:
+
+    -   `{n}` $n$ occurrences of the previous expression
+
+    -   `{n,m}` from $n$ to $m$ occurrences of the previous expression
+
+    -   `{n,}` at least $n$ occurrences of the previous expression
+
+    -   `{,m}` up to $m$ occurrences of the previous expression
+
+Explore regular expressions using online tools like [regex testers](https://pythex.org/) or [regex puzzles](https://regexcrossword.com/).
+
+This language will facilitate many real-world tasks, such as:
+
+-   To determine which strings match a pattern
+
+-   To find the positions of matches.
+
+-   To extract the content of matches.
+
+-   To replace matches with new values.
+
+-   To split a string based on a match.
+
+-   Etc.
+
+When writing useful regular expressions, we will most likely be trying to minimize type I (false positive) and type II (false negative) errors. Keep in mind that there's a trade-off between accuracy (or precision) and coverage (or recall).
+
+**Regular Expression Substitution, Capture Groups,**
+
+An important use of regular expressions is in *substitutions.* For example, can use `str_replace_all()` from `stringr` or `gsub()` from base R to put angle brackets around all integers in a string:
+
+```{r, echo=TRUE}
+string <- "the 35 boxes were opened 12 times"
+str_replace_all(string, pattern = "(\\d+)", replacement = "<\\1>")
+gsub(pattern = "(\\d+)", replacement = "<\\1>", string)
+```
+
+Here the "`\1`" will be replaced by whatever string matched the first item in parentheses.
+
+This use of parentheses to store a pattern in memory is called a **capture group.** Every time a capture group is used (i.e., parentheses surround a pattern), the resulting match is stored in a numbered **register.** If you match two different sets of parentheses, "`\2`" means whatever matched the second capture group. Parentheses thus have a double function in regular expressions; they are used to group terms for specifying the order in which operators should apply, and they are used to capture something in a register.
+
+**look forwards and backwards**
+
+(?=)
+
+file:///Users/acastroaraujo/Documents/Notes/Other/Text.html#regular_expressions

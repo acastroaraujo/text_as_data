@@ -1,0 +1,17 @@
+# Preface {.unnumbered}
+
+This notebook is structured in the same way as *Text as Data* [-@grimmer2022]: **discovery***,* **measurement***,* **prediction***,* and **causal inference***.* These are slightly different *tasks* and require their own forms of validation.
+
+The authors share an *agnostic* approach to text-as-data [cf. @aronow2019]: there is no underlying "true" data-generating process out there. And even if there is, we won't ever be able to adequately capture it.
+
+> We generally reject the view that there is an underlying structure that statistical models applied to text are recovering. Rather, we view statistical models as useful (and incomplete) summaries of the text documents.
+>
+> @grimmer2022 [pp. 11]
+
+We will return to the issue of validation many times throughout this notebook. But it's important to note that different disciplines think differently about this issue. In particular, *computer scientists* *trust humans more than social scientists do [@dimaggio2015].* Much work in computer science and artificial intelligence has tried to replicate the results of human problem solving, often described as the "gold standard" against which the output of algorithms should be evaluated. In contrast, social scientists tend to be suspicious of human judgement, riddled with all sorts of biases, prejudices, and ideological priors.
+
+By contrast, social scientists, at least those who have paid attention to work in cognitive psychology, are deeply suspicious of human judgment. The irony is that each group is most skeptical about the entities (algorithms or people) with which its expertise is most closely associated.
+
+> Computer scientists who treat human judgments as a gold standard *and* social scientists who see in sentiment-analysis programs an antidote to human imperfection will often be disappointed, as algorithms and humans seem to be bad at pretty much the same types of tasks. For now at least, we can savor the irony that each group is most skeptical about the entities (algorithms or people) with which its expertise is most closely associated.
+>
+> @dimaggio2015 [pp. 3]

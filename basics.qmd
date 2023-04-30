@@ -1,0 +1,186 @@
+---
+title: "Basics"
+---
+
+## Bag of Words
+
+The "bag of words" model is the most common representation of text. We represent each document by counting how many times each word appears in it. It's simple, perhaps too simple.
+
+For example, consider the following excerpt from the first State of the Union address by George Washington:
+
+FIGURE OUT HOW TO MAKE THE TEXT RENDER WRAPPED!
+
+```{r}
+#| message: false
+#| warning: false
+#| code-overflow: wrap
+
+library(tidyverse)
+
+txts <- sotu::sotu_text
+
+txts[[1]] |> 
+  str_trunc(width = 500) |> 
+  cat()
+```
+
+This text has the following properties:
+
+```{r}
+## number of characters
+nchar(txts[[1]])
+
+## number of words
+str_count(txts[[1]], pattern = "\\w+")
+```
+
+But turning this into a "bag of words" representation is not straight-forward. We must do some pre-processing first.
+
+### Pre-processing:
+
+@denny2018 describe 7 pre-processing choices that can affect downstream analyses.
+
+-   **Punctuation**.
+
+    Researchers must decide what types of characters represent valid text. We can be inclusive and choose to include all text, including numbers, html tags, punctuation, special characters (\$, %, &, etc.), and extra-white space characters. Depending on the application, these characters may be informative (e.g., predicting authorship). In general, however, we remove punctuation.
+
+-   **Numbers**.
+
+-   **Lowercasing**.
+
+-   **Equivalence Classes (Stemming** **or Lemmatization).**
+
+    > Stemming refers to the process of reducing a word to its most basic form (Porter 1980). For example the words "party", "partying", and "parties" all share a common stem "parti". Stemming is often employed as a vocabulary reduction technique, as it combines different forms of a word together. However, stemming can sometimes combine together words with substantively different meanings ("college students partying", and "political parties"), which might be misleading in practice.
+    >
+    > @denny2018 [pp. 4]
+
+    Stemming might reduce two very different words to a common stem (e.g., "secure" and "securities"). *You might not want to use stemming for some tasks [@schofield2016].*
+
+    A more sophisticated alternative to stemming is called **lemmatization**, which maps tokens to their "canonical form" (such as one might find in a dictionary).
+
+-   **Stopword Removal**.
+
+    *Note that you might not want to remove stopwords for some tasks (e.g., predicting authorship). In fact, for some tasks you might want to remove all words except stopwords.*
+
+-   **n-gram Inclusion**.
+
+    The meaning of some words is greatly enhanced by adding just a little context; e.g., when talking about "national defense" or "national debt." This leads some researchers to extract *n*-*grams* or sequences of tokens of length *n.* Adding n-grams to a document-term matrix can does be a good idea. But this may lead to an explosion in the size of the vocabulary.
+
+-   **Infrequently Used Terms**.
+
+    > A commonly used rule of thumb is to discard terms that appear in less than 0.5%--1% of documents (Grimmer 2010; Yano, Smith, and Wilkerson 2012; Grimmer and Stewart 2013); however, there has been no systematic study of the effects this preprocessing choice has on downstream analyses.
+    >
+    > @denny2018 [pp. 4-5]
+
+    We might want to reduce the size of the vocabulary for computational efficiency reasons or because we believe that very infrequently used terms will not contribute much information about document similarity.
+
+### Code
+
+The `txts` object is a character vector of length 240 (one entry per speech).
+
+Here is what we do:
+
+1.  Tokenize
+2.  Reduce Complexity (with pre-processing)
+3.  Create a Document-Feature Matrix (or Document-Term Matrix).
+
+Using the `quanteda` package:
+
+```{r}
+library(quanteda)
+
+bow <- tokens(
+  x = txts,
+  what = "word",
+  remove_punct = TRUE, 
+  split_hyphens = TRUE, 
+  remove_numbers = TRUE
+) 
+
+bow <- bow |> 
+  tokens_tolower() |> 
+  tokens_remove(stopwords(language = "en")) |> 
+  tokens_wordstem()
+
+bow
+
+dfm1 <- quanteda::dfm(bow)
+
+dfm1
+
+```
+
+Using the `tidytext` package:
+
+```{r}
+library(tidytext)
+
+df_bow <- tibble::enframe(txts, name = "id", value = "txt") |> 
+  ## this function makes a lot of the pre-processing decisions
+  ## less explicit, be careful.
+  unnest_tokens("word", input = txt, to_lower = TRUE)
+
+df_bow <- df_bow |> 
+  anti_join(tidytext::get_stopwords()) |> 
+  mutate(word = SnowballC::wordStem(word)) |> 
+  count(id, word)
+
+dfm2 <- df_bow |> 
+  cast_dfm(document = id, term = word, value = n)
+
+dfm2
+```
+
+Sometimes it's preferable to work with the matrix object itself, for which it's recommended to use the sparse matrix objects (e.g., `dgCMatrix`) developed in the `Matrix` package.
+
+We can then use simple operations to get stuff like sparsity (the percentage of empty cells in a matrix or the column sums (e.g., the total number of word counts across all documents).
+
+```{r}
+library(Matrix)
+
+M1 <- df_bow |> 
+  tidytext::cast_sparse(id, word, n)
+
+M1[1:15, 1:7]
+
+mean(M1 == 0)
+
+colSums(M1) |> 
+  sort(decreasing = TRUE) |> 
+  head(n = 15)
+
+M2 <- as(dfm1, Class = "sparseMatrix")
+
+M1[1:15, 1:7]
+
+dim(M1)
+dim(M2)
+M2[1:15, 1:7]
+```
+
+## 
+
+```{r}
+d <- convert(dfm1, to = "data.frame")
+
+d <- d |> 
+  pivot_longer(!doc_id, names_to = "word", values_to = "n") |> 
+  filter(n > 0)
+
+d <- d |> 
+  mutate(doc_id = readr::parse_number(doc_id))
+
+d <- d |> rename(id = doc_id) |> mutate(id = as.integer(id))
+
+d |> filter(id == 1) |> arrange(desc(n), word)
+
+df_bow |> filter(id == 1) |> arrange(desc(n), word)
+```
+
+**Exercise:**
+
+*Use regular expressions to go from texts to document term matrix.*
+
+## Language Models
+
+## Vector Spaces

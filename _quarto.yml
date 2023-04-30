@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Text as Data"
+  author: "andrés castro araújo"
+  date: last-modified
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - basics.qmd
+    - part: discovery.qmd
+    - part: measurement.qmd
+    - part: prediction.qmd
+    - part: causal.qmd
+    - word-embeddings.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: lumen
+    mainfont: Amiri
+    monofont: Fira Code
+    fontsize: 1em
+
+fig-align: center
+
+editor: visual

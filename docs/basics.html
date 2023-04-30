@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Text as Data - 2&nbsp; Basics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./discovery.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Text as Data</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./basics.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Discovery</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Measurement</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Prediction</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Causal Inference</span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./word-embeddings.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Word Embeddings</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bag-of-words" id="toc-bag-of-words" class="nav-link active" data-scroll-target="#bag-of-words"><span class="toc-section-number">2.1</span>  Bag of Words</a>
+  <ul class="collapse">
+  <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing"><span class="toc-section-number">2.1.1</span>  Pre-processing:</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="toc-section-number">2.1.2</span>  Code</a></li>
+  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="toc-section-number">2.2</span>  </a></li>
+  <li><a href="#language-models" id="toc-language-models" class="nav-link" data-scroll-target="#language-models"><span class="toc-section-number">2.3</span>  Language Models</a></li>
+  <li><a href="#vector-spaces" id="toc-vector-spaces" class="nav-link" data-scroll-target="#vector-spaces"><span class="toc-section-number">2.4</span>  Vector Spaces</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="bag-of-words" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="bag-of-words"><span class="header-section-number">2.1</span> Bag of Words</h2>
+<p>The “bag of words” model is the most common representation of text. We represent each document by counting how many times each word appears in it. It’s simple, perhaps too simple.</p>
+<p>For example, consider the following excerpt from the first State of the Union address by George Washington:</p>
+<p>FIGURE OUT HOW TO MAKE THE TEXT RENDER WRAPPED!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>txts <span class="ot">&lt;-</span> sotu<span class="sc">::</span>sotu_text</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>txts[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_trunc</span>(<span class="at">width =</span> <span class="dv">500</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fellow-Citizens of the Senate and House of Representatives: 
+
+I embrace with great satisfaction the opportunity which now presents itself of congratulating you on the present favorable prospects of our public affairs. The recent accession of the important state of North Carolina to the Constitution of the United States (of which official information has been received), the rising credit and respectability of our country, the general and increasing good will toward the government of the Union,...</code></pre>
+</div>
+</div>
+<p>This text has the following properties:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## number of characters</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(txts[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6712</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## number of words</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_count</span>(txts[[<span class="dv">1</span>]], <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">w+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1091</code></pre>
+</div>
+</div>
+<p>But turning this into a “bag of words” representation is not straight-forward. We must do some pre-processing first.</p>
+<section id="pre-processing" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="pre-processing"><span class="header-section-number">2.1.1</span> Pre-processing:</h3>
+<p><span class="citation" data-cites="denny2018">Denny and Spirling (<a href="references.html#ref-denny2018" role="doc-biblioref">2018</a>)</span> describe 7 pre-processing choices that can affect downstream analyses.</p>
+<ul>
+<li><p><strong>Punctuation</strong>.</p>
+<p>Researchers must decide what types of characters represent valid text. We can be inclusive and choose to include all text, including numbers, html tags, punctuation, special characters ($, %, &amp;, etc.), and extra-white space characters. Depending on the application, these characters may be informative (e.g., predicting authorship). In general, however, we remove punctuation.</p></li>
+<li><p><strong>Numbers</strong>.</p></li>
+<li><p><strong>Lowercasing</strong>.</p></li>
+<li><p><strong>Equivalence Classes (Stemming</strong> <strong>or Lemmatization).</strong></p>
+<blockquote class="blockquote">
+<p>Stemming refers to the process of reducing a word to its most basic form (Porter 1980). For example the words “party”, “partying”, and “parties” all share a common stem “parti”. Stemming is often employed as a vocabulary reduction technique, as it combines different forms of a word together. However, stemming can sometimes combine together words with substantively different meanings (“college students partying”, and “political parties”), which might be misleading in practice.</p>
+<p><span class="citation" data-cites="denny2018">Denny and Spirling (<a href="references.html#ref-denny2018" role="doc-biblioref">2018, 4</a>)</span></p>
+</blockquote>
+<p>Stemming might reduce two very different words to a common stem (e.g., “secure” and “securities”). <em>You might not want to use stemming for some tasks <span class="citation" data-cites="schofield2016">(<a href="references.html#ref-schofield2016" role="doc-biblioref">Schofield and Mimno 2016</a>)</span>.</em></p>
+<p>A more sophisticated alternative to stemming is called <strong>lemmatization</strong>, which maps tokens to their “canonical form” (such as one might find in a dictionary).</p></li>
+<li><p><strong>Stopword Removal</strong>.</p>
+<p><em>Note that you might not want to remove stopwords for some tasks (e.g., predicting authorship). In fact, for some tasks you might want to remove all words except stopwords.</em></p></li>
+<li><p><strong>n-gram Inclusion</strong>.</p>
+<p>The meaning of some words is greatly enhanced by adding just a little context; e.g., when talking about “national defense” or “national debt.” This leads some researchers to extract <em>n</em>-<em>grams</em> or sequences of tokens of length <em>n.</em> Adding n-grams to a document-term matrix can does be a good idea. But this may lead to an explosion in the size of the vocabulary.</p></li>
+<li><p><strong>Infrequently Used Terms</strong>.</p>
+<blockquote class="blockquote">
+<p>A commonly used rule of thumb is to discard terms that appear in less than 0.5%–1% of documents (Grimmer 2010; Yano, Smith, and Wilkerson 2012; Grimmer and Stewart 2013); however, there has been no systematic study of the effects this preprocessing choice has on downstream analyses.</p>
+<p><span class="citation" data-cites="denny2018">Denny and Spirling (<a href="references.html#ref-denny2018" role="doc-biblioref">2018, 4–5</a>)</span></p>
+</blockquote>
+<p>We might want to reduce the size of the vocabulary for computational efficiency reasons or because we believe that very infrequently used terms will not contribute much information about document similarity.</p></li>
+</ul>
+</section>
+<section id="code" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="code"><span class="header-section-number">2.1.2</span> Code</h3>
+<p>The <code>txts</code> object is a character vector of length 240 (one entry per speech).</p>
+<p>Here is what we do:</p>
+<ol type="1">
+<li>Tokenize</li>
+<li>Reduce Complexity (with pre-processing)</li>
+<li>Create a Document-Feature Matrix (or Document-Term Matrix).</li>
+</ol>
+<p>Using the <code>quanteda</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Package version: 3.3.0
+Unicode version: 14.0
+ICU version: 70.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parallel computing: 16 of 16 threads used.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>See https://quanteda.io for tutorials and examples.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bow <span class="ot">&lt;-</span> <span class="fu">tokens</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> txts,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"word"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">split_hyphens =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">remove_numbers =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>bow <span class="ot">&lt;-</span> bow <span class="sc">|&gt;</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="at">language =</span> <span class="st">"en"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_wordstem</span>()</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>bow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 240 documents.
+text1 :
+ [1] "fellow"    "citizen"   "senat"     "hous"      "repres"    "embrac"   
+ [7] "great"     "satisfact" "opportun"  "now"       "present"   "congratul"
+[ ... and 494 more ]
+
+text2 :
+ [1] "fellow"    "citizen"   "senat"     "hous"      "repres"    "meet"     
+ [7] "feel"      "much"      "satisfact" "abl"       "repeat"    "congratul"
+[ ... and 622 more ]
+
+text3 :
+ [1] "fellow"   "citizen"  "senat"    "hous"     "repres"   "vain"    
+ [7] "may"      "expect"   "peac"     "indian"   "frontier" "long"    
+[ ... and 1,064 more ]
+
+text4 :
+ [1] "fellow"    "citizen"   "senat"     "hous"      "repres"    "abat"     
+ [7] "satisfact" "meet"      "present"   "occas"     "felicit"   "continu"  
+[ ... and 951 more ]
+
+text5 :
+ [1] "fellow"  "citizen" "senat"   "hous"    "repres"  "sinc"    "commenc"
+ [8] "term"    "call"    "offic"   "fit"     "occas"  
+[ ... and 895 more ]
+
+text6 :
+ [1] "fellow"   "citizen"  "senat"    "hous"     "repres"   "call"    
+ [7] "mind"     "gracious" "indulg"   "heaven"   "american" "peopl"   
+[ ... and 1,327 more ]
+
+[ reached max_ndoc ... 234 more documents ]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dfm1 <span class="ot">&lt;-</span> quanteda<span class="sc">::</span><span class="fu">dfm</span>(bow)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dfm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Document-feature matrix of: 240 documents, 14,411 features (91.34% sparse) and 0 docvars.
+       features
+docs    fellow citizen senat hous repres embrac great satisfact opportun now
+  text1      2       3     2    3      3      1     4         2        1   1
+  text2      3       5     2    3      3      0     4         1        0   2
+  text3      1       3     3    3      3      1     0         3        1   0
+  text4      1       7     2    3      4      1     0         3        0   2
+  text5      2       5     2    3      3      1     0         0        1   2
+  text6      3      11     2    5      4      1     1         0        1   3
+[ reached max_ndoc ... 234 more documents, reached max_nfeat ... 14,401 more features ]</code></pre>
+</div>
+</div>
+<p>Using the <code>tidytext</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_bow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">enframe</span>(txts, <span class="at">name =</span> <span class="st">"id"</span>, <span class="at">value =</span> <span class="st">"txt"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## this function makes a lot of the pre-processing decisions</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">## less explicit, be careful.</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="st">"word"</span>, <span class="at">input =</span> txt, <span class="at">to_lower =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>df_bow <span class="ot">&lt;-</span> df_bow <span class="sc">|&gt;</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(tidytext<span class="sc">::</span><span class="fu">get_stopwords</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> SnowballC<span class="sc">::</span><span class="fu">wordStem</span>(word)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(id, word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dfm2 <span class="ot">&lt;-</span> df_bow <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dfm</span>(<span class="at">document =</span> id, <span class="at">term =</span> word, <span class="at">value =</span> n)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>dfm2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Document-feature matrix of: 240 documents, 19,908 features (93.40% sparse) and 0 docvars.
+    features
+docs abroad access accord add adequ administr admit adopt advanc affair
+   1      1      1      1   1     1         1     1     1      1      3
+   2      1      0      0   2     0         1     0     0      0      1
+   3      0      0      0   0     2         1     0     1      2      1
+   4      2      0      2   3     1         0     0     1      0      1
+   5      0      0      2   0     0         0     0     1      1      1
+   6      0      0      1   0     1         0     0     1      2      1
+[ reached max_ndoc ... 234 more documents, reached max_nfeat ... 19,898 more features ]</code></pre>
+</div>
+</div>
+<p>Sometimes it’s preferable to work with the matrix object itself, for which it’s recommended to use the sparse matrix objects (e.g., <code>dgCMatrix</code>) developed in the <code>Matrix</code> package.</p>
+<p>We can then use simple operations to get stuff like sparsity (the percentage of empty cells in a matrix or the column sums (e.g., the total number of word counts across all documents).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Matrix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">&lt;-</span> df_bow <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  tidytext<span class="sc">::</span><span class="fu">cast_sparse</span>(id, word, n)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>M1[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>15 x 7 sparse Matrix of class "dgCMatrix"
+   abroad access accord add adequ administr admit
+1       1      1      1   1     1         1     1
+2       1      .      .   2     .         1     .
+3       .      .      .   .     2         1     .
+4       2      .      2   3     1         .     .
+5       .      .      2   .     .         .     .
+6       .      .      1   .     1         .     .
+7       .      .      1   2     2         .     .
+8       .      .      .   1     1         1     1
+9       .      .      .   1     1         .     .
+10      .      .      .   1     .         .     .
+11      .      .      .   .     .         1     .
+12      .      .      .   .     .         1     .
+13      1      .      .   1     .         2     2
+14      4      .      .   1     1         .     .
+15      .      .      1   .     .         .     .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(M1 <span class="sc">==</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9340255</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(M1) <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   state   govern     year   nation congress     unit      can  countri 
+    9483     8746     7435     6480     5827     5381     4839     4774 
+   peopl     upon american      law     time      new     must 
+    4517     4228     4003     3848     3717     3615     3600 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">&lt;-</span> <span class="fu">as</span>(dfm1, <span class="at">Class =</span> <span class="st">"sparseMatrix"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>M1[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>15 x 7 sparse Matrix of class "dgCMatrix"
+   abroad access accord add adequ administr admit
+1       1      1      1   1     1         1     1
+2       1      .      .   2     .         1     .
+3       .      .      .   .     2         1     .
+4       2      .      2   3     1         .     .
+5       .      .      2   .     .         .     .
+6       .      .      1   .     1         .     .
+7       .      .      1   2     2         .     .
+8       .      .      .   1     1         1     1
+9       .      .      .   1     1         .     .
+10      .      .      .   1     .         .     .
+11      .      .      .   .     .         1     .
+12      .      .      .   .     .         1     .
+13      1      .      .   1     .         2     2
+14      4      .      .   1     1         .     .
+15      .      .      1   .     .         .     .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(M1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   240 19908</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(M2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   240 14411</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>M2[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>15 x 7 sparse Matrix of class "dgCMatrix"
+        features
+docs     fellow citizen senat hous repres embrac great
+  text1       2       3     2    3      3      1     4
+  text2       3       5     2    3      3      .     4
+  text3       1       3     3    3      3      1     .
+  text4       1       7     2    3      4      1     .
+  text5       2       5     2    3      3      1     .
+  text6       3      11     2    5      4      1     1
+  text7       2       4     4    4      5      .     1
+  text8       1       6     2    4      4      .     9
+  text9       1       8     2    4      3      .     5
+  text10      1       2     2    3      3      .     6
+  text11      1       3     3    4      3      .     4
+  text12      .       1     2    3      4      .     7
+  text13      3      10     1    1      1      .     6
+  text14      4       6     1    1      1      .     5
+  text15      2       7     3    3      2      .     2</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="section" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="section"><span class="header-section-number">2.2</span> </h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">convert</span>(dfm1, <span class="at">to =</span> <span class="st">"data.frame"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>doc_id, <span class="at">names_to =</span> <span class="st">"word"</span>, <span class="at">values_to =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> </span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> readr<span class="sc">::</span><span class="fu">parse_number</span>(doc_id))</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">id =</span> doc_id) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">as.integer</span>(id))</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span> <span class="fu">filter</span>(id <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(n), word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 342 × 3
+      id word        n
+   &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
+ 1     1 state       6
+ 2     1 import      5
+ 3     1 may         5
+ 4     1 measur      5
+ 5     1 public      5
+ 6     1 respect     5
+ 7     1 unit        5
+ 8     1 countri     4
+ 9     1 end         4
+10     1 govern      4
+# ℹ 332 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df_bow <span class="sc">|&gt;</span> <span class="fu">filter</span>(id <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(n), word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 342 × 3
+      id word        n
+   &lt;int&gt; &lt;chr&gt;   &lt;int&gt;
+ 1     1 state       6
+ 2     1 import      5
+ 3     1 mai         5
+ 4     1 measur      5
+ 5     1 public      5
+ 6     1 respect     5
+ 7     1 unit        5
+ 8     1 countri     4
+ 9     1 end         4
+10     1 govern      4
+# ℹ 332 more rows</code></pre>
+</div>
+</div>
+<p><strong>Exercise:</strong></p>
+<p><em>Use regular expressions to go from texts to document term matrix.</em></p>
+</section>
+<section id="language-models" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="language-models"><span class="header-section-number">2.3</span> Language Models</h2>
+</section>
+<section id="vector-spaces" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="vector-spaces"><span class="header-section-number">2.4</span> Vector Spaces</h2>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-denny2018" class="csl-entry" role="doc-biblioentry">
+Denny, Matthew J., and Arthur Spirling. 2018. <span>“Text Preprocessing for Unsupervised Learning: Why It Matters, When It Misleads, and What to Do about It.”</span> <em>Political Analysis</em> 26 (2): 168189.
+</div>
+<div id="ref-schofield2016" class="csl-entry" role="doc-biblioentry">
+Schofield, Alexandra, and David Mimno. 2016. <span>“Comparing Apples to Apple: The Effects of Stemmers on Topic Models.”</span> <em>Transactions of the Association for Computational Linguistics</em> 4 (July): 287–300. <a href="https://doi.org/10.1162/tacl_a_00099">https://doi.org/10.1162/tacl_a_00099</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./discovery.html" class="pagination-link">
+        <span class="nav-page-text">Discovery</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
