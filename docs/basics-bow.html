@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Text as Data - 2&nbsp; Basics</title>
+<title>Text as Data - Representation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./discovery.html" rel="next">
+<link href="./basics-language-models.html" rel="next">
 <link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -152,7 +152,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics</span></h1>
+      <h1 class="quarto-secondary-nav-title">Representation</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -185,11 +185,31 @@ div.csl-indent {
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basics-bow.html" class="sidebar-item-text sidebar-link active">Representation</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./basics.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics</span></a>
+  <a href="./basics-language-models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Language Models</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./basics-vector-spaces.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vector Spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./basics-word-embeddings.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Word Embeddings</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">Discovery</span>
   </li>
@@ -204,11 +224,6 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./word-embeddings.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Word Embeddings</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -221,14 +236,12 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#bag-of-words" id="toc-bag-of-words" class="nav-link active" data-scroll-target="#bag-of-words"><span class="toc-section-number">2.1</span>  Bag of Words</a>
+  <li><a href="#bag-of-words" id="toc-bag-of-words" class="nav-link active" data-scroll-target="#bag-of-words">Bag of Words</a>
   <ul class="collapse">
-  <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing"><span class="toc-section-number">2.1.1</span>  Pre-processing:</a></li>
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="toc-section-number">2.1.2</span>  Code</a></li>
+  <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-processing:</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="toc-section-number">2.2</span>  </a></li>
-  <li><a href="#language-models" id="toc-language-models" class="nav-link" data-scroll-target="#language-models"><span class="toc-section-number">2.3</span>  Language Models</a></li>
-  <li><a href="#vector-spaces" id="toc-vector-spaces" class="nav-link" data-scroll-target="#vector-spaces"><span class="toc-section-number">2.4</span>  Vector Spaces</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
     </div>
@@ -237,7 +250,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics</span></h1>
+<h1 class="title d-none d-lg-block">Representation</h1>
 </div>
 
 
@@ -252,8 +265,9 @@ div.csl-indent {
 
 </header>
 
-<section id="bag-of-words" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="bag-of-words"><span class="header-section-number">2.1</span> Bag of Words</h2>
+<p>This section covers the representation of words and other forms of text data. It builds on the standard bag-of-words representation and covers probabilistic language models, vector spaces, and word embeddings.</p>
+<section id="bag-of-words" class="level2">
+<h2 class="anchored" data-anchor-id="bag-of-words">Bag of Words</h2>
 <p>The “bag of words” model is the most common representation of text. We represent each document by counting how many times each word appears in it. It’s simple, perhaps too simple.</p>
 <p>For example, consider the following excerpt from the first State of the Union address by George Washington:</p>
 <p>FIGURE OUT HOW TO MAKE THE TEXT RENDER WRAPPED!</p>
@@ -285,8 +299,8 @@ I embrace with great satisfaction the opportunity which now presents itself of c
 </div>
 </div>
 <p>But turning this into a “bag of words” representation is not straight-forward. We must do some pre-processing first.</p>
-<section id="pre-processing" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="pre-processing"><span class="header-section-number">2.1.1</span> Pre-processing:</h3>
+<section id="pre-processing" class="level3">
+<h3 class="anchored" data-anchor-id="pre-processing">Pre-processing:</h3>
 <p><span class="citation" data-cites="denny2018">Denny and Spirling (<a href="references.html#ref-denny2018" role="doc-biblioref">2018</a>)</span> describe 7 pre-processing choices that can affect downstream analyses.</p>
 <ul>
 <li><p><strong>Punctuation</strong>.</p>
@@ -312,8 +326,8 @@ I embrace with great satisfaction the opportunity which now presents itself of c
 <p>We might want to reduce the size of the vocabulary for computational efficiency reasons or because we believe that very infrequently used terms will not contribute much information about document similarity.</p></li>
 </ul>
 </section>
-<section id="code" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="code"><span class="header-section-number">2.1.2</span> Code</h3>
+<section id="code" class="level3">
+<h3 class="anchored" data-anchor-id="code">Code</h3>
 <p>The <code>txts</code> object is a character vector of length 240 (one entry per speech).</p>
 <p>Here is what we do:</p>
 <ol type="1">
@@ -535,8 +549,8 @@ docs     fellow citizen senat hous repres embrac great
 </div>
 </section>
 </section>
-<section id="section" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="section"><span class="header-section-number">2.2</span> </h2>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">convert</span>(dfm1, <span class="at">to =</span> <span class="st">"data.frame"</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -586,12 +600,6 @@ docs     fellow citizen senat hous repres embrac great
 </div>
 <p><strong>Exercise:</strong></p>
 <p><em>Use regular expressions to go from texts to document term matrix.</em></p>
-</section>
-<section id="language-models" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="language-models"><span class="header-section-number">2.3</span> Language Models</h2>
-</section>
-<section id="vector-spaces" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="vector-spaces"><span class="header-section-number">2.4</span> Vector Spaces</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -745,8 +753,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discovery.html" class="pagination-link">
-        <span class="nav-page-text">Discovery</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./basics-language-models.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Language Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

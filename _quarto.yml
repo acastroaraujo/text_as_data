@@ -9,12 +9,15 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - basics.qmd
+    - part: basics-bow.qmd
+      chapters:
+        - basics-language-models.qmd
+        - basics-vector-spaces.qmd
+        - basics-word-embeddings.qmd
     - part: discovery.qmd
     - part: measurement.qmd
     - part: prediction.qmd
     - part: causal.qmd
-    - word-embeddings.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -27,5 +30,8 @@ format:
     fontsize: 1em
 
 fig-align: center
+
+execute:
+  freeze: auto
 
 editor: visual

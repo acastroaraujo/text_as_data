@@ -1,6 +1,8 @@
 ---
-title: "Basics"
+title: "Representation"
 ---
+
+This section covers the representation of words and other forms of text data. It builds on the standard bag-of-words representation and covers probabilistic language models, vector spaces, and word embeddings.
 
 ## Bag of Words
 
@@ -180,7 +182,3 @@ df_bow |> filter(id == 1) |> arrange(desc(n), word)
 **Exercise:**
 
 *Use regular expressions to go from texts to document term matrix.*
-
-## Language Models
-
-## Vector Spaces
